@@ -1,6 +1,6 @@
 # 0x00. Personal data
 
-| `Back-end` | `Redis` |
+| `Back-end` | `Authentification` |
 
 ![personal_meme](images/personal_meme.png)
 
