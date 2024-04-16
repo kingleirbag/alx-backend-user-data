@@ -10,7 +10,7 @@ from models.user import User
 def view_all_users() -> str:
     """ GET /api/v1/users
     Return:
-      - list of all User objects JSON represented
+      - list of all User objects JSON
     """
     all_users = [user.to_json() for user in User.all()]
     return jsonify(all_users)
@@ -22,7 +22,7 @@ def view_one_user(user_id: str = None) -> str:
     Path parameter:
       - User ID
     Return:
-      - User object JSON represented
+      - User object JSON
       - 404 if the User ID doesn't exist
     """
     if user_id is None:
@@ -60,7 +60,7 @@ def create_user() -> str:
       - last_name (optional)
       - first_name (optional)
     Return:
-      - User object JSON represented
+      - User object JSON
       - 400 if can't create the new User
     """
     rj = None
@@ -98,7 +98,7 @@ def update_user(user_id: str = None) -> str:
       - last_name (optional)
       - first_name (optional)
     Return:
-      - User object JSON represented
+      - User object JSON
       - 404 if the User ID doesn't exist
       - 400 if can't update the User
     """
