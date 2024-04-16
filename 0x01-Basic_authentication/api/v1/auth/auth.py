@@ -5,7 +5,7 @@ from flask import Flask, request
 
 
 class Auth:
-    ''' A Class Auth to manage the API authentications.
+    ''' Class Auth to manage the API authentication.
     '''
 
     def require_auth(
@@ -13,7 +13,7 @@ class Auth:
             path: str,
             excluded_paths: List[str]
             ) -> bool:
-        ''' Require auth def
+        ''' Required auth
         '''
         if path is None or excluded_paths is None or not excluded_paths:
             return True
@@ -52,7 +52,7 @@ class Auth:
             self,
             request=None
             ) -> str:
-        '''Authorization header
+        '''Auth header
         '''
         if request is None:
             return None
@@ -63,7 +63,7 @@ class Auth:
             self,
             request=None
             ) -> TypeVar('User'):
-        ''' Current User def
+        ''' Current User
         '''
         request = Flask(__name__)
         return None
