@@ -32,7 +32,7 @@ class SessionAuth(Auth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """Get session ID Generator for a user
-        Returns session id based on user id 
+        Returns session id based on user id
         Args:
             self (_type_): Basic auth instance
             session_id(str): session id
