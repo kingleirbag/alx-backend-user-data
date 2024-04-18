@@ -37,7 +37,7 @@ class SessionExpAuth(SessionAuth):
         return session_id
 
     def user_id_for_session_id(self, session_id=None):
-        """Returns user_id for a session_id 
+        """Returns user_id for a session_id
         Args:
             self (_type_): Basic auth instance
             session_id(str): session id
