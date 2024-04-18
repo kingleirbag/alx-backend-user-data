@@ -8,7 +8,11 @@ from api.v1.auth.session_auth import SessionAuth
 
 
 class SessionExpAuth(SessionAuth):
-    """ Session Expiration authentication """
+    """- Session Expiration authentication
+    - inherits from SessionAuth
+    Args:
+        SessionAuth (class): Parent SessionAuth class
+    """
 
     def __init__(self):
         """ Initializes class """
@@ -19,7 +23,12 @@ class SessionExpAuth(SessionAuth):
         self.session_duration = session_duration
 
     def create_session(self, user_id=None):
-        """ Session ID generator """
+        """Session ID Generator
+        Returns session id
+        Args:
+            self (_type_): Basic auth instance
+            user_id(str): user id
+        """
         session_id = super().create_session(user_id)
         if session_id is None:
             return None
@@ -28,7 +37,11 @@ class SessionExpAuth(SessionAuth):
         return session_id
 
     def user_id_for_session_id(self, session_id=None):
-        """ Returns user_id for a session_id """
+        """Returns user_id for a session_id 
+        Args:
+            self (_type_): Basic auth instance
+            session_id(str): session id
+        """
         if session_id is None:
             return None
         if session_id not in SessionAuth.user_id_by_session_id.keys():

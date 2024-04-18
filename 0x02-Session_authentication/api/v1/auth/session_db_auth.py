@@ -8,9 +8,18 @@ from models.user_session import UserSession
 
 
 class SessionDBAuth(SessionExpAuth):
-    """ SessionDBAuth class """
+    """- SessionDBAuth class
+    - inherits from SessionExpAuth
+    Args:
+        SessionExpAuth (class): Parent SessionExpAuth class
+    """
     def create_session(self, user_id=None):
-        """ Session ID generator """
+        """Session ID Generator
+        Returns session id
+        Args:
+            self (_type_): Basic auth instance
+            user_id(str): user id
+        """
         session_id = super().create_session(user_id)
         if user_id is None:
             return None
@@ -19,7 +28,11 @@ class SessionDBAuth(SessionExpAuth):
         return session_id
 
     def user_id_for_session_id(self, session_id=None):
-        """ Returns user_id from session_id """
+        """Returns user_id from session_id
+        Args:
+            self (_type_): Basic auth instance
+            session_id(str): session id
+        """
         if session_id is None:
             return None
         UserSession.load_from_file()
@@ -34,7 +47,10 @@ class SessionDBAuth(SessionExpAuth):
         return is_valid_user.user_id
 
     def destroy_session(self, request=None):
-        """ Destroy usersession from session id from request cookie """
+        """Destroy usersession from session id from request cookie
+        Args:
+            self (_type_): Basic auth instance
+        """
         cookie_data = self.session_cookie(request)
         if cookie_data is None:
             return False

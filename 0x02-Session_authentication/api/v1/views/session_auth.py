@@ -12,7 +12,7 @@ from os import abort, environ, getenv
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def session_login() -> str:
     """ POST /api/v1/auth/session/login
-    Return user instance, 400 if missing
+    Return user instance for the login session, 400 if missing
     """
     user_email = request.form.get('email', None)
     user_password = request.form.get('password', None)
@@ -47,7 +47,7 @@ def session_login() -> str:
     strict_slashes=False)
 def session_logout() -> str:
     """ DELETE /api/v1/auth/session/logout
-    Returns deleted json (if correctly done)
+    Returns empty object deleted json (if correctly done)
     404 if fails
     """
     from api.v1.app import auth
