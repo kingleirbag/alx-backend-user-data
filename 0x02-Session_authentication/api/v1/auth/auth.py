@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Manage API authentication system
+"""
 from flask import request
 from typing import List, TypeVar
 from os import getenv
@@ -6,10 +9,10 @@ from os import getenv
 
 class Auth():
     """
-    Class that manages API authentication methods
+    Manage API authentication methods
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """ Return boolean if path requires authentication"""
+        """ Return boolean """
         if path is None or excluded_paths is None or not len(excluded_paths):
             return True
 
@@ -30,17 +33,17 @@ class Auth():
         return True
 
     def authorization_header(self, request=None) -> str:
-        """ Retrieves authorization header """
+        """ Request Flask object """
         if request is None or 'Authorization' not in request.headers:
             return None
         return request.headers.get('Authorization')
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """ Retrieves current user object"""
+        """ Flask request object """
         return None
 
     def session_cookie(self, request=None):
-        """ Retrieves session cookie """
+        """ Returns request cookie value """
         if request is None:
             return None
         cookie = getenv('SESSION_NAME')
