@@ -11,11 +11,13 @@ from user import Base, User
 
 
 class DB:
-    """DB class
+    """
+    DB class provides methods to interact with the database.
     """
 
     def __init__(self):
-        """Initializes a new DB instance
+        """
+        Initializes a new DB instance and sets up the database engine.
         """
         self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
@@ -24,8 +26,9 @@ class DB:
 
     @property
     def _session(self):
-        """Private memoized session method (object)
-        Never used outside DB class
+        """
+        Private memoized session method that returns a session object.
+        It's used internally within the DB class.
         """
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
@@ -33,8 +36,15 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """Add new user to database
-        Returns a User object
+        """
+        Adds a new user to the database.
+
+        Args:
+            email (str): The email address of the user.
+            hashed_password (str): The hashed password of the user.
+
+        Returns:
+            User: A User object representing the newly added user.
         """
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
@@ -42,8 +52,20 @@ class DB:
         return user
 
     def find_user_by(self, **kwargs) -> User:
-        """Returns first rrow found in users table
-        as filtered by methods input arguments
+        """
+        Finds a user in the database based on the provided criteria.
+
+        Args:
+            **kwargs: Keyword arguments representing the criteria to
+            filter the user.
+
+        Returns:
+            User: The first user found in the database that matches
+            the specified criteria.
+
+        Raises:
+            InvalidRequestError: If an invalid attribute is passed as a filter
+            NoResultFound: If no user matches the specified criteria.
         """
         user_keys = ['id', 'email', 'hashed_password', 'session_id',
                      'reset_token']
@@ -56,11 +78,16 @@ class DB:
         return result
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """Use find_user_by to locate the user to update
-        Update user's attribute as passed in methods argument
-        Commit changes to database
-        Raises ValueError if argument does not correspond to user
-        attribute passed
+        """
+        Updates the attributes of a user in the database.
+
+        Args:
+            user_id (int): The ID of the user to update.
+            **kwargs: Keyword arguments representing the attributes to update
+            and their new values.
+
+        Raises:
+            ValueError: If an invalid attribute is passed for updating.
         """
         user_to_update = self.find_user_by(id=user_id)
         user_keys = ['id', 'email', 'hashed_password', 'session_id',
