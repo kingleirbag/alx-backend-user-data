@@ -14,33 +14,55 @@ import uuid
 
 
 def _hash_password(password: str) -> str:
-    """Takes in password string argument
-    Returns bytes (salted_hashed)
+    """
+    Takes in a password string as an argument and hashes it using a
+    salted hash algorithm.
+    
+    Args:
+        password (str): The password string to be hashed.
+        
+    Returns:
+        str: The hashed password as bytes (salted_hashed).
     """
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
 def _generate_uuid() -> str:
-    """Returns string repr of a new UUID
-    Use uuid module
+    """
+    Generates a new UUID (Universally Unique Identifier) and returns
+    its string representation.
+    
+    Returns:
+        str: The string representation of the generated UUID.
     """
     return str(uuid.uuid4())
 
 
 class Auth:
-    """Auth class to interact with the authentication database
+    """
+    Auth class provides methods to interact with the authentication database.
     """
 
     def __init__(self):
-        """Initializes DB
+        """
+        Initializes the Auth class by creating a new instance of the database.
         """
         self._db = DB()
 
     def register_user(self, email: str, password: str) -> User:
-        """Takes mandatory string (email, password) arguments
-        Returns a User object
-        Raise ValueError if exists
-        User <user's email> already exists
+        """
+        Registers a new user with the provided email and password.
+        
+        Args:
+            email (str): The email address of the user.
+            password (str): The password of the user.
+            
+        Returns:
+            User: A User object representing the newly registered user
+            
+        Raises:
+            ValueError: If a user with the same email already exists in
+            the database.
         """
         try:
             self._db.find_user_by(email=email)
@@ -51,8 +73,19 @@ class Auth:
             return new_user
 
     def valid_login(self, email: str, password: str) -> bool:
-        """Expect email and password required arguments
-        Returns a boolean
+        """
+        Registers a new user with the provided email and password.
+        
+        Args:
+            email (str): The email address of the user.
+            password (str): The password of the user.
+                
+        Returns:
+            User: A User object representing the newly registered user.
+            
+        Raises:
+            ValueError: If a user with the same email already exists in
+            the database.
         """
         try:
             user = self._db.find_user_by(email=email)
@@ -63,10 +96,14 @@ class Auth:
         return False
 
     def create_session(self, email: str) -> str:
-        """Takes email string argument
-        Returns the session ID as a string
-        Find user corresponding to email, generate new UUID
-        store in database as users session_id, return session ID
+        """
+        Creates a new session for the user with the provided email.
+        
+        Args:
+            email (str): The email address of the user.
+            
+        Returns:
+            str: The session ID generated for the user.
         """
         session_id = _generate_uuid()
         try:
@@ -77,8 +114,14 @@ class Auth:
             return None
 
     def get_user_from_session_id(self, session_id: str) -> str:
-        """Takes single session_id string argument
-        Returns corresponding User or None
+        """
+        Retrieves the user corresponding to the provided session ID.
+        
+        Args:
+            session_id (str): The session ID of the user.
+            
+        Returns:
+            str: The email address of the user associated with the session ID.
         """
         try:
             user = self._db.find_user_by(session_id=session_id)
@@ -87,8 +130,12 @@ class Auth:
             return None
 
     def destroy_session(self, user_id: int) -> None:
-        """Takes a single user_id integer srgument
-        Returns None
+        """
+        Destroys the session of the user with the provided user ID.
+        
+        Args:
+            user_id (int): The user ID of the user whose session is to
+            be destroyed.
         """
         try:
             user = self._db.find_user_by(id=user_id)
@@ -97,10 +144,18 @@ class Auth:
             return None
 
     def get_reset_password_token(self, email: str) -> str:
-        """Takes email string argument, Returns string
-        Find user corresponding to email, raise ValueError if not exists
-        generate uuid and update users reset_token database field
-        Return the token if exists
+        """
+        Generates a reset password token for the user with the provided email.
+        
+        Args:
+            email (str): The email address of the user.
+            
+        Returns:
+            str: The reset password token generated for the user.
+            
+        Raises:
+            ValueError: If the user with the provided email does not exist
+            in the database.
         """
         updated_token = _generate_uuid()
         try:
@@ -111,12 +166,20 @@ class Auth:
             raise ValueError
 
     def update_password(self, reset_token: str, password: str) -> str:
-        """Takes reset_token string argument and a password string
-        returns None
-        Use reset_token to find corresponding user, raise ValueError
-        if doesnt exists, if exists, hash password and update user
-        hashed_password field with new hashed password and reset_token
-        field to None
+        """
+        Updates the password of the user corresponding to the provided
+        reset token.
+        
+        Args:
+            reset_token (str): The reset password token of the user.
+            password (str): The new password to be set for the user.
+            
+        Returns:
+            str: None
+            
+        Raises:
+            ValueError: If the reset token is invalid or if the user
+            does not exist in the database.
         """
         if reset_token is None or password is None:
             return None
