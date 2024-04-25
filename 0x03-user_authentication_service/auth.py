@@ -16,11 +16,11 @@ import uuid
 def _hash_password(password: str) -> str:
     """
     Takes in a password string as an argument and hashes it using a
-    salted hash algorithm.
-    
+    salted hash algorithm
+
     Args:
         password (str): The password string to be hashed.
-        
+
     Returns:
         str: The hashed password as bytes (salted_hashed).
     """
@@ -31,7 +31,7 @@ def _generate_uuid() -> str:
     """
     Generates a new UUID (Universally Unique Identifier) and returns
     its string representation.
-    
+
     Returns:
         str: The string representation of the generated UUID.
     """
@@ -51,15 +51,15 @@ class Auth:
 
     def register_user(self, email: str, password: str) -> User:
         """
-        Registers a new user with the provided email and password.
-        
+        Registers a new user with the provided email and password
+
         Args:
             email (str): The email address of the user.
             password (str): The password of the user.
-            
+
         Returns:
             User: A User object representing the newly registered user
-            
+
         Raises:
             ValueError: If a user with the same email already exists in
             the database.
@@ -75,14 +75,14 @@ class Auth:
     def valid_login(self, email: str, password: str) -> bool:
         """
         Registers a new user with the provided email and password.
-        
+
         Args:
             email (str): The email address of the user.
             password (str): The password of the user.
-                
+
         Returns:
             User: A User object representing the newly registered user.
-            
+
         Raises:
             ValueError: If a user with the same email already exists in
             the database.
@@ -98,10 +98,10 @@ class Auth:
     def create_session(self, email: str) -> str:
         """
         Creates a new session for the user with the provided email.
-        
+
         Args:
-            email (str): The email address of the user.
-            
+            email (str): The email address of the user
+
         Returns:
             str: The session ID generated for the user.
         """
@@ -116,10 +116,10 @@ class Auth:
     def get_user_from_session_id(self, session_id: str) -> str:
         """
         Retrieves the user corresponding to the provided session ID.
-        
+
         Args:
             session_id (str): The session ID of the user.
-            
+
         Returns:
             str: The email address of the user associated with the session ID.
         """
@@ -132,7 +132,7 @@ class Auth:
     def destroy_session(self, user_id: int) -> None:
         """
         Destroys the session of the user with the provided user ID.
-        
+
         Args:
             user_id (int): The user ID of the user whose session is to
             be destroyed.
@@ -146,13 +146,13 @@ class Auth:
     def get_reset_password_token(self, email: str) -> str:
         """
         Generates a reset password token for the user with the provided email.
-        
+
         Args:
             email (str): The email address of the user.
-            
+
         Returns:
             str: The reset password token generated for the user.
-            
+
         Raises:
             ValueError: If the user with the provided email does not exist
             in the database.
@@ -169,14 +169,14 @@ class Auth:
         """
         Updates the password of the user corresponding to the provided
         reset token.
-        
+
         Args:
             reset_token (str): The reset password token of the user.
             password (str): The new password to be set for the user.
-            
+
         Returns:
             str: None
-            
+
         Raises:
             ValueError: If the reset token is invalid or if the user
             does not exist in the database.
