@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Route module for basic API for flask app 
+"""Route module for basic API for flask app
 """
 
 from db import DB
@@ -17,7 +17,7 @@ app = Flask(__name__)
 def welcome() -> str:
     """
     GET /
-    
+
     Handles a GET request to the root endpoint. Returns a
     welcome message in French.
 
@@ -31,7 +31,7 @@ def welcome() -> str:
 def users() -> str:
     """
     POST /users, JSON: -email, -password
-    
+
     Handles a POST request to the '/users' endpoint. It expects JSON data with
     'email' and 'password' fields. Attempts to register a new user with the
     provided email and password. If successful, returns a JSON response with
@@ -43,7 +43,7 @@ def users() -> str:
         str: A JSON response containing either a success message with the
         email of the created user or an error message if the email is
         already registered.
-    
+
     Raises:
         400 Bad Request: If the email is already registered.
     """
@@ -60,7 +60,7 @@ def users() -> str:
 def login():
     """
     POST /sessions, - email, - password
-    
+
     Authenticates user credentials by accepting a POST request with 'email'
     and 'password' parameters. If the credentials are valid, it creates a
     session for the user and returns a response with a cookie containing
@@ -68,8 +68,8 @@ def login():
 
     Returns:
         response (Flask Response): A Flask Response object containing JSON
-        data with the user's email and a success message.
-    
+        data with the user's email and a success message
+
     Raises:
         401 Unauthorized: If the provided credentials are invalid.
     """
@@ -89,7 +89,7 @@ def login():
 def logout():
     """
     DELETE /sessions, - session_id
-    
+
     Handles a DELETE request to the '/sessions' endpoint. It expects a
     'session_id' cookie in the request. Finds the user associated with
     the provided session ID. If the session exists, it destroys the session.
@@ -116,7 +116,7 @@ def logout():
 def profile() -> str:
     """
     GET /profile
-    
+
     Handles a GET request to the '/profile' endpoint. It retrieves the session
     ID from the cookie. Uses the session ID to find the corresponding user.
     If the session ID is missing or invalid, it responds with a 403 Forbidden
@@ -140,7 +140,7 @@ def profile() -> str:
 def get_reset_password_token_route() -> str:
     """
     POST /reset_password, - email
-    
+
     Handles a POST request to the '/reset_password' endpoint. It expects a
     JSON payload with the 'email' field. Checks if the provided email is
     registered. If the email is not registered, it responds with a 403
@@ -167,7 +167,7 @@ def get_reset_password_token_route() -> str:
 def update_password() -> str:
     """
     PUT /reset_password, - email, - reset_token, - new_password
-    
+
     Handles a PUT request to the '/reset_password' endpoint. It expects a
     JSON payload with 'email', 'reset_token', and 'new_password' fields.
     Checks if the provided reset token is valid. If the token is invalid, it
